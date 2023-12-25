@@ -7,6 +7,9 @@ pygame.init()
 #create screen
 screen = pygame.display.set_mode((800,600))
 
+#Create background
+background=pygame.image.load("space_bg.jpeg")
+
 #title and icon
 pygame.display.set_caption("Space Invaders")
 icon=pygame.image.load("ufo.png")
@@ -34,7 +37,9 @@ def enemy(x,y):
 #Game Loop
 running = True
 while running:
-    screen.fill((116,116,176))
+    screen.fill((0,0,0))
+    #background image
+    screen.blit(background,(0,0))
 
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
