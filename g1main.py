@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 #initialize pygame
 pygame.init() 
@@ -15,6 +16,10 @@ pygame.display.set_caption("Space Invaders")
 icon=pygame.image.load("ufo.png")
 pygame.display.set_icon(icon)
 
+
+#keeping score
+score=0
+
 #Adding player
 playerimg=pygame.image.load("player.png")
 playerX=370
@@ -26,7 +31,7 @@ def player(x,y):
 
 #Adding enemy
 enemyimg=pygame.image.load("enemy.png")
-enemyX=random.randint(0,800)
+enemyX=random.randint(0,735)
 enemyY=random.randint(50,150)
 enemyX_change=0.3
 enemyY_change=40
@@ -47,6 +52,12 @@ def fire_bullet(x,y):
     global bullet_state   #so that bullet_state can be changed inside the function
     bullet_state="fire"
     screen.blit(bulletimg,(x+16, y+10))
+
+def is_collision(enemyX,enemyY,bulletX,bulletY):
+    distance=math.sqrt((math.pow(enemyX-bulletX,2))+(math.pow(enemyY-bulletY,2)))
+    if distance<27:
+        return True
+    return False
 
 #Game Loop
 running = True
@@ -97,6 +108,15 @@ while running:
     if bulletY<=0:
         bulletY=495
         bullet_state="ready"  
+
+    #collision
+    collision=is_collision(enemyX,enemyY,bulletX,bulletY)
+    if collision:
+        bulletY=495
+        bullet_state="ready"
+        score+=1
+        enemyX=random.randint(0,735)
+        enemyY=random.randint(50,150)
 
     player(playerX,playerY)
     enemy(enemyX,enemyY)
