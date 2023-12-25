@@ -40,7 +40,7 @@ def enemy(x,y):
 bulletimg=pygame.image.load("bullet.png")
 bulletX=0
 bulletY=495
-bulletY_change=0.5   
+bulletY_change=0.6   
 bullet_state="ready"
 
 def fire_bullet(x,y):
@@ -64,7 +64,11 @@ while running:
             if event.key==pygame.K_RIGHT:
                 playerX_change=0.3
             if event.key==pygame.K_SPACE:
-                fire_bullet(playerX,bulletY)
+                #only shoot when bullet is not on screen
+                if bullet_state=="ready":
+                    # get current x coordinate of player
+                    bulletX=playerX
+                    fire_bullet(bulletX,bulletY)
                 
         if event.type==pygame.KEYUP:
             if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
@@ -88,8 +92,12 @@ while running:
 
     #bullet movement
     if bullet_state=="fire":
-        fire_bullet(playerX,bulletY)
-        bulletY-=bulletY_change            
+        fire_bullet(bulletX,bulletY)
+        bulletY-=bulletY_change
+    if bulletY<=0:
+        bulletY=495
+        bullet_state="ready"  
+
     player(playerX,playerY)
     enemy(enemyX,enemyY)
 
