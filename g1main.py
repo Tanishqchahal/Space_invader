@@ -126,7 +126,7 @@ while running:
     #Enemy movements
     for i in range(num_enem):
         #Game Over
-        if enemyY[i]>200:
+        if enemyY[i]>440:
             for j in range(num_enem):
                 enemyY[j] =2000    
             game_over_text()
