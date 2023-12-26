@@ -18,7 +18,15 @@ pygame.display.set_icon(icon)
 
 
 #keeping score
-score=0
+score_value=0
+font = pygame.font.Font('freesansbold.ttf',32)
+
+textX=10
+textY=10
+
+def show_score(x,y):
+    score=font.render("Score: "+str(score_value),True,(255,255,255))
+    screen.blit(score,(x,y))
 
 #Adding player
 playerimg=pygame.image.load("player.png")
@@ -101,7 +109,7 @@ while running:
     elif playerX>=736:
         playerX=736    
     
-    #enemy movements
+    #Enemy movements
     for i in range(num_enem):    
         enemyX[i]+=enemyX_change[i]
         if enemyX[i]<=0:
@@ -110,15 +118,15 @@ while running:
         elif enemyX[i]>=736:
             enemyX_change[i]=-0.4
             enemyY[i]+=enemyY_change[i]
-        #collision
+        #Collision
         collision=is_collision(enemyX[i],enemyY[i],bulletX,bulletY)
         if collision:
             bulletY=495
             bullet_state="ready"
-            score+=1
+            score_value+=1
             enemyX[i]=random.randint(0,735)
             enemyY[i]=random.randint(50,150)
-    
+
         enemy(enemyX[i],enemyY[i],i)
 
     #bullet movement
@@ -131,5 +139,5 @@ while running:
    
 
     player(playerX,playerY)
-    
+    show_score(textX,textY)
     pygame.display.update()
