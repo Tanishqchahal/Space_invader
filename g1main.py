@@ -81,6 +81,12 @@ def is_collision(enemyX,enemyY,bulletX,bulletY):
         return True
     return False
 
+#Game over text
+over_font = pygame.font.Font('freesansbold.ttf',64)
+def game_over_text():
+    over=over_font.render("GAME OVER!!",True,(255,0,0))
+    screen.blit(over,(200,250))
+
 #Game Loop
 running = True
 while running:
@@ -118,7 +124,13 @@ while running:
         playerX=736    
     
     #Enemy movements
-    for i in range(num_enem):    
+    for i in range(num_enem):
+        #Game Over
+        if enemyY[i]>200:
+            for j in range(num_enem):
+                enemyY[j] =2000    
+            game_over_text()
+            break    
         enemyX[i]+=enemyX_change[i]
         if enemyX[i]<=0:
             enemyX_change[i]=0.4
